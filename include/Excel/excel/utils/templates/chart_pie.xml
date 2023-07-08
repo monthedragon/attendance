@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<c:chartSpace
+    xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart"
+    xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+    xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+    <c:date1904 val="0"/>
+    <c:lang val="en-PH"/>
+    <c:roundedCorners val="0"/>
+    <mc:AlternateContent
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+        <mc:Choice Requires="c14"
+            xmlns:c14="http://schemas.microsoft.com/office/drawing/2007/8/2/chart">
+            <c14:style val="102"/>
+        </mc:Choice>
+        <mc:Fallback>
+            <c:style val="2"/>
+        </mc:Fallback>
+    </mc:AlternateContent>
+    <c:chart>
+        <c:title>
+            <c:tx>
+                <c:rich>
+                    <a:bodyPr/>
+                    <a:lstStyle/>
+                    <a:p>
+                        <a:pPr>
+                            <a:defRPr/>
+                        </a:pPr>
+                        <a:r>
+                            <a:rPr lang="en-PH"/>
+                            <a:t></a:t>
+                        </a:r>
+                    </a:p>
+                </c:rich>
+            </c:tx>
+            <c:layout/>
+            <c:overlay val="0"/>
+        </c:title>
+        <c:autoTitleDeleted val="0"/>
+
+        <c:view3D>
+            <c:rotX val="30"/>
+            <c:rotY val="0"/>
+            <c:rAngAx val="0"/>
+            <c:perspective val="30"/>
+        </c:view3D>
+
+        <c:plotArea>
+            <c:layout/>
+
+            <c:spPr>
+                <a:solidFill>
+                    <a:srgbClr val="FFFFFF"/>
+                </a:solidFill>
+            </c:spPr>
+        </c:plotArea>
+        <c:legend>
+            <c:legendPos val="r"/>
+            <c:layout/>
+            <c:overlay val="0"/>
+        </c:legend>
+        <c:plotVisOnly val="1"/>
+        <c:dispBlanksAs val="gap"/>
+        <c:showDLblsOverMax val="0"/>
+    </c:chart>
+    <c:spPr>
+        <a:solidFill>
+            <a:srgbClr val="FFFFFF"/>
+        </a:solidFill>
+    </c:spPr>
+    <c:txPr>
+        <a:bodyPr/>
+        <a:lstStyle/>
+        <a:p>
+            <a:pPr>
+                <a:defRPr sz="1000">
+                    <a:solidFill>
+                        <a:srgbClr val="000000"/>
+                    </a:solidFill>
+                    <a:latin typeface="Calibri" pitchFamily="34" charset="-128"/>
+                    <a:ea typeface="Calibri" pitchFamily="34" charset="-128"/>
+                </a:defRPr>
+            </a:pPr>
+            <a:endParaRPr lang="en-US"/>
+        </a:p>
+    </c:txPr>
+    <c:printSettings>
+        <c:headerFooter/>
+        <c:pageMargins b="0.75" l="0.7" r="0.7" t="0.75" header="0.3" footer="0.3"/>
+        <c:pageSetup/>
+    </c:printSettings>
+</c:chartSpace>
