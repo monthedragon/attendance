@@ -1005,6 +1005,19 @@ class Main_model extends CI_Model {
 		
 		return $remaining_leaves;
 	}
+
+	/**
+	 * 2023-07-22
+	 * Cancellation of request either OT or leave
+	 */
+	public function cancelRequest($req_id, $req_type){
+		$table = $req_type == 'leave' ? 'leave_file' : 'overtime';
+		$update_arr = array('file_status' => 'canceled', 'modified_by' => $this->session->userdata('username'));
+		$where_arr = array('id' => $req_id);
+
+		$this->db->update($table,$update_arr, $where_arr);
+		// echo $this->db->last_query();
+	}
 	
 	
 	

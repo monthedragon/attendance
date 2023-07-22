@@ -116,6 +116,10 @@ $(function(){
 		$('#spn_rem_leave').load('<?=base_url()?>main/get_rem_leave_ajax/'+user_id);
 		
 	})
+
+	$('input[name=from_date]').change(function(){
+		$('input[name=to_date]').val($(this).val());
+	})
 	
 	
 })

@@ -143,6 +143,17 @@
 				$tag_val .= "<span style='color:{$font_color}'>(".$file_status[$detail['status']] .')</span>';
 				$link = "<a href='".base_url()."main/e_file/{$detail['id']}/{$detail['data_type']}'>edit</a>";
 			}
+			
+			//2023-07-22 when the OT or LEAVE is still in pending state
+			//the owner can cancel the request
+			$cancel_link = '';
+			if(in_array($detail['data_type'], array('ot', 'leave')) && 
+				$cur_user == $user_id){
+				if($detail['status'] == 'pending'){
+					$cancel_link = "<a href='".base_url()."main/e_f_cancel/{$detail['id']}/{$detail['data_type']}' class='cancel_link'>cancel</a>";
+				}
+			}
+
 			$one_row = "<tr class='tr-list'>
 							<td>{$on_break}</td>
 							<td>{$detail['firstname']} {$detail['lastname']}</td>
@@ -153,6 +164,10 @@
 			
 			if(hasAccess($privs,201)){
 				$one_row .= "<td style='text-align:center'>{$link}</td>";
+			}
+
+			if($cancel_link){
+				$one_row .= "<td style='text-align:center'>{$cancel_link}</td>";
 			}
 			
 			$one_row .= "</tr>";
@@ -191,5 +206,27 @@ $(function(){
 	
 	$(".tr-list").mouseover(function(){$(this).addClass('tr_highlight');})
 	$(".tr-list").mouseout(function(){$(this).removeClass('tr_highlight');})
+
+	//cancel link
+	$(".cancel_link").inlineConfirmation({
+		confirmCallback: function() {
+
+			var url =  $(this).parent().parent().parent().find('a.cancel_link').prop('href');
+			$.ajax({
+				url:url,
+				success:function(data){
+					$('#btnSearch').click(); //refresh the page
+				}
+			})
+
+		},
+		expiresIn: 3,
+		confirm:"<a href='#'>Yes</a>",
+		separator:" | ",
+		cancel:"<a href='#'>No</a>"
+
+	});
+
+	
 })
 </script>
