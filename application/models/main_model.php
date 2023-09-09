@@ -137,6 +137,38 @@ class Main_model extends CI_Model {
 	}
 	
 	/**
+	 * Set where date conditions
+	 */
+	public function getDateConditions(){
+		
+		$attendance_date_where=$trgt_date_where=$break_where = '';
+
+		$pdata 		= $this->input->post();
+
+		$from_date 	= $pdata['from_date'];
+		$to_date 	= $pdata['to_date'];
+
+		if($from_date){
+			$attendance_date_where .= " AND login >= '{$from_date} 00:00:00' ";		
+									   
+			$trgt_date_where .= " AND target_date >= '{$from_date} 00:00:00'";	
+									
+			$break_where .= " AND break_in >= '{$from_date} 00:00:00' ";	
+		}
+
+		if($to_date){
+		
+			$attendance_date_where .= " AND login <= '{$to_date} 23:59:59'";		
+									   
+			$trgt_date_where .= " AND target_date <= '{$to_date} 23:59:59'";	
+									
+			$break_where .= " AND break_in <= '{$to_date} 23:59:59' ";		
+		}
+
+		return array($attendance_date_where, $trgt_date_where, $break_where);
+	}
+
+	/**
 	* get agent attendance
 	*/
 	function get_agent_attendance(){
@@ -161,8 +193,6 @@ class Main_model extends CI_Model {
 		$l_name 	= trim($pdata['lastname']);
 		$f_reason 	= trim($pdata['file_reason']);
 		
-		$attendance_date_where=$trgt_date_where=$break_where = '';
-		
 		if($pdata['from_date'] != '' && $pdata['to_date']){
 			$from_date 	= $pdata['from_date'];
 			$to_date 	= $pdata['to_date'];
@@ -177,6 +207,13 @@ class Main_model extends CI_Model {
 								AND break_in <= '{$to_date} 23:59:59' 
 								AND breaks.break_type = '{$pdata['search_type']}'";		
 		}
+
+		list($attendance_date_where, $trgt_date_where, $break_where) = $this->getDateConditions();
+
+		if($pdata['search_type']){
+			$break_where .= " AND breaks.break_type = '{$pdata['search_type']}'";		
+		}
+
 		$where_query = '';		
 		if($target_agent_id){
 			//this is only applicable to non-admin user like AGENTS,
@@ -328,6 +365,7 @@ class Main_model extends CI_Model {
 		}
 
 		$data = $this->db->query($query)->result_array();
+
 		
 		
 		$user_type = $this->session->userdata('user_type');
@@ -1018,7 +1056,5 @@ class Main_model extends CI_Model {
 		$this->db->update($table,$update_arr, $where_arr);
 		// echo $this->db->last_query();
 	}
-	
-	
 	
 }

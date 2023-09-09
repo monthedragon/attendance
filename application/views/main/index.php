@@ -75,11 +75,11 @@ if($today_att_info){
 		<?}?>
 			<td>
 				<label for='from_date'>From date</label>
-				<input type='input' name='from_date' class='input_date ' value='<?=$from_date?>'>
+				<input type='input' name='from_date' class='input_date ' value='<?=$from_date?>' autocomplete="off">
 			</td>
 			<td>
 				<label for='to_date'>TO date</label>
-				<input type='input' name='to_date' class='input_date '  value='<?=$to_date?>'>
+				<input type='input' name='to_date' class='input_date '  value='<?=$to_date?>' autocomplete="off">
 			</td>
 			
 			<td>

@@ -11,6 +11,10 @@
 			$pending .= (!empty($pending)) ? ' / ' : '';
 			
 			$pending .= "<a href='#' id='a_pending_ot'>ot: {$pending_ot_ctr}</a>";
+
+			if($user_type == ADMIN_CODE){
+				$pending .= " (<a href='#' id='a_approve_ot'>approve all OT?</a>)";
+			}
 		}
 		
 		$html .= $pending;
@@ -227,6 +231,22 @@ $(function(){
 
 	});
 
-	
+	$('#a_approve_ot').inlineConfirmation({
+		confirmCallback: function() {
+			const url = "<?=base_url()?>main/approvePendingOT";
+			$.ajax({
+				url:url,
+				success:function(data){
+					$('#btnSearch').click(); //refresh the page
+				}
+			})
+		},
+		expiresIn: 3,
+		confirm:"<a href='#'>Yes</a>",
+		separator:" | ",
+		cancel:"<a href='#'>No</a>"
+
+	});
 })
+	
 </script>

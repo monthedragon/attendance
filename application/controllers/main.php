@@ -79,6 +79,7 @@ Class Main extends Auth_Controller  {
 		$data['max_ut_hr_tagging'] = $this->getLookup('ut_interval',1);
 		$data['break_type'] = $this->getLookup('breaks',1);
 		$data['file_status'] = $this->getLookup('file_status',1);
+		$data['user_type'] = $this->session->userdata('user_type');
 		
 		$data['search_type'] = $pdata['search_type'];
 
@@ -317,6 +318,30 @@ Class Main extends Auth_Controller  {
 	function e_f_cancel($req_id, $req_type){
 		$this->main_model->cancelRequest($req_id, $req_type);
 
+	}
+
+	/**
+	 * Added @ 2023-09-09
+	 * Approve all pending OT
+	 */
+	function approvePendingOT(){
+		
+		if($this->session->userdata('user_type') != ADMIN_CODE) 
+			show_error('Unauthorized access', 403);
+
+		$user_name = $this->session->userdata('username');
+
+		$update_arr = array(
+			'file_status' => 'approved',
+			'modified_by' => $user_name,
+			'modified_date'=>date('Y-m-d H:i:s')
+		);
+
+		$where_arr = array(
+			'file_status' => 'pending',
+		);
+
+		$this->db->update('overtime',$update_arr, $where_arr);
 	}
 }
 ?>

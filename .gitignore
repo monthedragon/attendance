@@ -1,0 +1,7 @@
+.htaccess
+.vscode/
+changes.txt
+index.php
+application/config/config.php
+uploads/
+assets/images/logo*
