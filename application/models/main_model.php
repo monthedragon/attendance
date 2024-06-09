@@ -46,11 +46,14 @@ class Main_model extends CI_Model {
 			
 			$tagging = 'present'; //default
 			
-			if($target_login){ //if has assigned target_login
-				if($target_login < date('H:i:s')){ 
-					$tagging = 'late';
+			if(!$this->skipLateInWeekends()){
+				if($target_login){ //if has assigned target_login
+					if($target_login < date('H:i:s')){ 
+						$tagging = 'late';
+					}
 				}
 			}
+			
 			
 			$insert_arr = array('user_id'=>$user_name,
 								'login'=>date('Y-m-d H:i:s'),
@@ -63,6 +66,16 @@ class Main_model extends CI_Model {
 			$this->db->insert('attendance',$insert_arr);
 		}
 		
+	}
+
+	/**
+	 * When tagging as late, don't include weekends
+	 * 2024-06-09 (mon)
+	 */
+	function skipLateInWeekends(){
+		$curDay = date('w');
+		$weekendsArr = array(0,6); 
+		return in_array($curDay, $weekendsArr);
 	}
 	
 	function doLogout(){
