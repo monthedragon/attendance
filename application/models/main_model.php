@@ -404,7 +404,7 @@ class Main_model extends CI_Model {
      * @param $leave_query
      */
     public function setHalfDayForRemarks($leave_query){
-        $hdWhereCond = " AND leave_file.tagging = 'half_day'
+        $hdWhereCond = " AND leave_file.tagging IN  ('half_day','hd_wout_p')
                         AND leave_file.file_status = 'approved' ";
         $leave_query .= $hdWhereCond;
         $dataArr = $this->db->query($leave_query)->result_array();
