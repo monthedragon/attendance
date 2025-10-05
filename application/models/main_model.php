@@ -16,6 +16,9 @@ class Main_model extends CI_Model {
 	//variables being used on main LIST
 	//These variables will be used to save on SESSION for easy usage of the screen
 	public 	$sw_target_fields = array('firstname','lastname','from_date','to_date','search_type','pending_only','file_reason');
+
+    //Handles the half_day leave for displaying remarks
+    public $hdForRemarks = [];
 	
 	public function __construct()
 	{
@@ -364,8 +367,11 @@ class Main_model extends CI_Model {
 							UNION
 							{$break_query}
 					) AS new_tbl ORDER BY login;";
+
+            $this->setHalfDayForRemarks($leave_query);
 		}elseif($pdata['search_type'] == 'attendance'){
 			$query = $attendance_query;
+            $this->setHalfDayForRemarks($leave_query);
 		}elseif($pdata['search_type'] == 'leave'){
 			$query = $leave_query;
 		}elseif($pdata['search_type'] == 'overtime'){
@@ -379,8 +385,6 @@ class Main_model extends CI_Model {
 
 		$data = $this->db->query($query)->result_array();
 
-		
-		
 		$user_type = $this->session->userdata('user_type');
 		$this->getTodayBreakTime();
 		if($user_type == ADMIN_CODE){
@@ -392,6 +396,25 @@ class Main_model extends CI_Model {
 		return $data;
 				
 	}
+
+    /**
+     * 2025-10-04
+     * Get half-day leaves; will be used later for adding remarks
+     * This method is only called when 'attendance' is present in the search
+     * @param $leave_query
+     */
+    public function setHalfDayForRemarks($leave_query){
+        $hdWhereCond = " AND leave_file.tagging = 'half_day'
+                        AND leave_file.file_status = 'approved' ";
+        $leave_query .= $hdWhereCond;
+        $dataArr = $this->db->query($leave_query)->result_array();
+
+        foreach($dataArr as $info){
+            $date = substr($info['login'],0,10);
+            $this->hdForRemarks[$info['user_id']][$date] = true;
+        }
+
+    }
 	
 	function getPendingFilesCTR($file_type){
 		$user_type = $this->session->userdata('user_type');

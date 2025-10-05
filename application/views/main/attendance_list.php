@@ -113,8 +113,21 @@
 			}
 			
 			if($detail['data_type'] == 'attendance'){
-				$tag_val = $tagging[$detail['tagging']];
-				$link = "<a href='".base_url()."main/edit/{$detail['id']}'>edit</a>";
+
+                //2025-10-04; added remarks when agent in HD
+                $tagging = $detail['tagging'];
+                $tag_val = $taggingList[$tagging];
+                $targetDate = substr($detail['login'],0,10);
+
+                if(isset($hd_list_for_remarks[$detail['user_id']][$targetDate])){
+                    if($tagging == 'present'){
+                        $tag_val = 'Half Day'; //set Half day instead of present and on-time
+                    } else if($tagging == 'late'){
+                        $tag_val .= ' (HD)'; //add HD remarks if present and on time
+                    }
+                }
+
+                $link = "<a href='".base_url()."main/edit/{$detail['id']}'>edit</a>";
 			}elseif($detail['data_type'] == 'leave'){
 				$tag_val = $leave_sub[$detail['tagging']];
 				

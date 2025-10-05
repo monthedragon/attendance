@@ -55,7 +55,7 @@ Class Main extends Auth_Controller  {
 		//check if there is any SESSION saved for the main SW form
 		$this->main_model->getSearchInitValue($data);
 		
-		$this->load->view('main/index',$data);	
+		$this->load->view('main/index',$data);
 		
 		$this->load->view('templates/footer'); 	
 	}
@@ -65,14 +65,15 @@ Class Main extends Auth_Controller  {
 		
 		//everytime search is being process, save all the params to the SESSION
 		$this->main_model->setSeachPdataSession();
-		
-		$data['attendance_list'] = $this->main_model->get_agent_attendance();
+
+        $data['attendance_list'] = $this->main_model->get_agent_attendance();
+        $data['hd_list_for_remarks'] = $this->main_model->hdForRemarks;
 		$data['pending_leave_ctr'] = $this->main_model->getPendingLeaves();
 		$data['pending_ot_ctr'] = $this->main_model->getPendingOT();
 		$data['on_breaks'] 	= $this->main_model->on_break;
 		$data['user_break_arr'] = $this->main_model->user_break_arr;
 		$data['privs'] = $this->data;
-		$data['tagging'] = $this->getLookup('attendance',1);
+		$data['taggingList'] = $this->getLookup('attendance',1);
 		$data['leave_sub'] = $this->getLookup('leave_sub',1);
 		$data['ot_sub'] = $this->getLookup('ot_sub',1);
 		$data['max_ot_hr_tagging'] = $this->getLookup('ot_interval',1);
