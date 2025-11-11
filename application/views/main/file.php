@@ -104,6 +104,12 @@ $(function(){
 		}else{
 			$('.sub_tagging').hide();
 		}
+
+        if (['absent', 'leave'].includes(val)) {
+            $('textarea[name=reasons]').addClass('required');
+        } else {
+            $('textarea[name=reasons]').removeClass('required');
+        }
 		
 	})
 	
