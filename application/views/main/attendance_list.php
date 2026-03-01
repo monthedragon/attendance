@@ -19,12 +19,18 @@
 		
 		$html .= $pending;
 		$html .= '</span>';
-		
+
 		echo $html;
 	}
+
+    $loginNote = '';
+    if ($user_type == ADMIN_CODE && $loggedInCtr) {
+        $loginNote = '<span style="color:black; font-style:italic;"> [ logged in: ' . $loggedInCtr . ' ]</span>';
+    }
+
 ?>
 <fieldset>
-    <legend>Main List</legend>
+    <legend>Main List <?=$loginNote?></legend>
 
     <div id='selector'></div>
 

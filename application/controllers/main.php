@@ -65,6 +65,7 @@ Class Main extends Auth_Controller  {
 		
 		//everytime search is being process, save all the params to the SESSION
 		$this->main_model->setSeachPdataSession();
+        $data['loggedInCtr'] = $this->main_model->getTodaysCountLoggedIn();
 
         $data['attendance_list'] = $this->main_model->get_agent_attendance();
         $data['hd_list_for_remarks'] = $this->main_model->hdForRemarks;

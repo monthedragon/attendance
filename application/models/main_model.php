@@ -1092,5 +1092,22 @@ class Main_model extends CI_Model {
 		$this->db->update($table,$update_arr, $where_arr);
 		// echo $this->db->last_query();
 	}
+
+    public function getTodaysCountLoggedIn(){
+        $today_start = date('Y-m-d 00:00:00');
+        $today_end   = date('Y-m-d 23:59:59');
+
+        $query = $this->db
+            ->select('COUNT(*) as total')
+            ->from('attendance')
+            ->where('login >=', $today_start)
+            ->where('login <=', $today_end)
+            ->where('tagging', 'present')
+            ->get()
+            ->row_array();
+
+        return $query['total'];
+
+    }
 	
 }
